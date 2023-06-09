@@ -1,7 +1,9 @@
 import * as S from './Search.styled.ts';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react';
 import { Movie } from '../../types/movie.ts';
 import Dialog from '../../components/Dialog';
+import { useRecoilState } from 'recoil';
+import { favoritesMoviesState } from '../../state/atom.ts';
 
 const MockMovies: Movie[] = [
   {
@@ -89,6 +91,16 @@ const MockMovies: Movie[] = [
 export default function SearchPage() {
   const [keyword, setKeyword] = useState<string>('');
   const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie>();
+
+  const [favoritesMovies, setFavoritesMovies] =
+    useRecoilState(favoritesMoviesState);
+
+  const isFavoritesBySelectedMovie = useMemo(() => {
+    return favoritesMovies.some(
+      (movie) => movie.imdbID === selectedMovie?.imdbID,
+    );
+  }, [favoritesMovies, selectedMovie?.imdbID]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value.trim());
@@ -107,11 +119,44 @@ export default function SearchPage() {
   };
 
   const handleMovieItemClick = (movie: Movie) => {
+    setSelectedMovie(movie);
     setIsOpenDialog(true);
-
-    // TODO: 즐겨찾기 추가
-    console.log(movie);
   };
+
+  const addFavorites = useCallback(
+    (movie: Movie) => {
+      setFavoritesMovies((prev) => [...prev, movie]);
+    },
+    [setFavoritesMovies],
+  );
+
+  const removeFavorites = useCallback(
+    (movie: Movie) => {
+      setFavoritesMovies((prev) =>
+        prev.filter((item) => item.imdbID !== movie.imdbID),
+      );
+    },
+    [setFavoritesMovies],
+  );
+
+  const handleFavoritesUpdateButtonClick = useCallback(() => {
+    if (!selectedMovie) {
+      return;
+    }
+
+    if (isFavoritesBySelectedMovie) {
+      removeFavorites(selectedMovie);
+    } else {
+      addFavorites(selectedMovie);
+    }
+
+    setIsOpenDialog(false);
+  }, [
+    addFavorites,
+    isFavoritesBySelectedMovie,
+    removeFavorites,
+    selectedMovie,
+  ]);
 
   return (
     <>
@@ -149,10 +194,15 @@ export default function SearchPage() {
 
       <Dialog isOpen={isOpenDialog}>
         <S.DialogContent>
-          <button type="button">즐겨찾기 추가</button>
-          <button type="button" onClick={() => setIsOpenDialog(false)}>
-            취소
-          </button>
+          <strong>{selectedMovie?.Title}</strong>
+          <div>
+            <button type="button" onClick={handleFavoritesUpdateButtonClick}>
+              {isFavoritesBySelectedMovie ? '즐겨찾기 제거' : '즐겨찾기 추가'}
+            </button>
+            <button type="button" onClick={() => setIsOpenDialog(false)}>
+              취소
+            </button>
+          </div>
         </S.DialogContent>
       </Dialog>
     </>

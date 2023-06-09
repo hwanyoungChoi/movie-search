@@ -49,10 +49,13 @@ export const MovieListItem = styled.div`
 `;
 
 export const DialogContent = styled.div`
-  display: flex;
-  gap: 10px;
+  > div {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
 
-  > button {
-    width: 150px;
+    > button {
+      width: 150px;
+    }
   }
 `;
