@@ -7,7 +7,7 @@ export const Container = styled.div`
   min-width: ${MIN_PAGE_WIDTH}px;
   margin: 0 auto;
   background: white;
-  height: 100vh;
+  min-height: 100vh;
 
   > main {
     padding: 18px 24px;

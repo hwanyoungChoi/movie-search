@@ -1,0 +1,58 @@
+import styled from '@emotion/styled';
+import { TAB_BAR_HEIGHT, Z_INDEX } from '../../lib/constants.ts';
+
+export const Form = styled.form`
+  display: flex;
+  height: 40px;
+
+  position: sticky;
+  top: 0;
+  z-index: ${Z_INDEX.Fixed};
+
+  > input {
+    flex: 1;
+    border: 1px solid black;
+    outline: 0;
+    padding-left: 4px;
+  }
+
+  > button {
+    width: 56px;
+    border: 1px solid black;
+  }
+`;
+
+export const MovieList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+  padding: 16px 0;
+  margin-bottom: ${TAB_BAR_HEIGHT}px;
+`;
+
+export const MovieListItem = styled.div`
+  cursor: pointer;
+  border: 1px solid black;
+  word-break: break-all;
+  padding: 10px;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  > img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+`;
+
+export const DialogContent = styled.div`
+  display: flex;
+  gap: 10px;
+
+  > button {
+    width: 150px;
+  }
+`;
