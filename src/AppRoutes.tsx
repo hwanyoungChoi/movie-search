@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
+import { PATHS } from './lib/routes.ts';
 
 const Layout = lazy(() => import('./components/Layout'));
 const SearchPage = lazy(() => import('./pages/search'));
@@ -10,8 +11,8 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<SearchPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path={PATHS.Home} element={<SearchPage />} />
+          <Route path={PATHS.Favorites} element={<FavoritesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
