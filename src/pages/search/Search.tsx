@@ -4,6 +4,7 @@ import { Movie } from '../../types/movie.ts';
 import Dialog from '../../components/Dialog';
 import { useRecoilState } from 'recoil';
 import { favoritesMoviesState } from '../../state/atom.ts';
+import MovieListItem from '../../components/MovieListItem';
 
 const MockMovies: Movie[] = [
   {
@@ -175,17 +176,11 @@ export default function SearchPage() {
       {MockMovies.length ? (
         <S.MovieList>
           {MockMovies.map((movie) => (
-            <S.MovieListItem
+            <MovieListItem
               key={movie.imdbID}
               onClick={() => handleMovieItemClick(movie)}
-            >
-              <img src={movie.Poster} />
-              <div>
-                <strong>{movie.Title}</strong>
-                <div>{movie.Year}</div>
-                <div>{movie.Type}</div>
-              </div>
-            </S.MovieListItem>
+              movie={movie}
+            />
           ))}
         </S.MovieList>
       ) : (
