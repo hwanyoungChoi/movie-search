@@ -1,5 +1,6 @@
 export interface ListResponse<T> {
-  Search: T[];
-  totalResults: number;
-  Response: boolean;
+  Search?: T[];
+  totalResults?: number;
+  Error?: string;
+  Response: string;
 }
