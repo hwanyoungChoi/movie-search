@@ -16,3 +16,9 @@ export const Container = styled.div`
     margin-bottom: 10px;
   }
 `;
+
+export const MovieDescription = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`;

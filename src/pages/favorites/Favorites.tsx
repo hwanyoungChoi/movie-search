@@ -58,6 +58,7 @@ export default function FavoritesPage() {
             <MovieListItem
               key={movie.imdbID}
               movie={movie}
+              isFavorites
               onClick={() => handleMovieItemClick(movie)}
               draggable
               onDragStart={(e) => handleDragStart(e, index)}

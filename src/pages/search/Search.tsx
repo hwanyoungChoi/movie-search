@@ -123,6 +123,9 @@ export default function SearchPage() {
               key={movie.imdbID}
               onClick={() => handleMovieItemClick(movie)}
               movie={movie}
+              isFavorites={favoritesMovies.some(
+                (favoritesMovie) => favoritesMovie.imdbID === movie.imdbID,
+              )}
             />
           ))}
         </S.MovieList>
