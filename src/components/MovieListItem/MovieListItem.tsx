@@ -1,14 +1,15 @@
 import * as S from './MovieListItem.styled.ts';
 import { Movie } from '../../types/movie.ts';
+import { HTMLAttributes } from 'react';
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   movie: Movie;
   onClick: () => void;
 }
 
-export default function MovieListItem({ movie, onClick }: Props) {
+export default function MovieListItem({ movie, onClick, ...props }: Props) {
   return (
-    <S.Container onClick={onClick}>
+    <S.Container onClick={onClick} {...props}>
       <img src={movie.Poster} />
       <div>
         <strong>{movie.Title}</strong>

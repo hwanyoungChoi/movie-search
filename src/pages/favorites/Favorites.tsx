@@ -25,17 +25,44 @@ export default function FavoritesPage() {
     setIsOpenDialog(false);
   }, [selectedMovie?.imdbID, setFavoritesMovies]);
 
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    index: number,
+  ) => {
+    e.dataTransfer.setData('text/plain', index.toString());
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    e.preventDefault();
+
+    const sourceIndex = parseInt(e.dataTransfer.getData('text/plain'));
+
+    const updatedMovies = [...favoritesMovies];
+    const [removedItem] = updatedMovies.splice(sourceIndex, 1);
+    updatedMovies.splice(index, 0, removedItem);
+
+    setFavoritesMovies(updatedMovies);
+  };
+
   return (
     <S.Container>
       <S.Title>내 즐겨찾기</S.Title>
 
       {favoritesMovies.length ? (
         <S.MovieList>
-          {favoritesMovies.map((movie) => (
+          {favoritesMovies.map((movie, index) => (
             <MovieListItem
               key={movie.imdbID}
               movie={movie}
               onClick={() => handleMovieItemClick(movie)}
+              draggable
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
             />
           ))}
         </S.MovieList>
