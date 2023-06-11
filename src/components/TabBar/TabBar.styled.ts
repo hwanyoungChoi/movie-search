@@ -7,7 +7,7 @@ import {
 
 export const Container = styled.nav`
   position: fixed;
-  background: white;
+  background: lightgray;
   max-width: ${MAX_PAGE_WIDTH}px;
   min-width: ${MIN_PAGE_WIDTH}px;
   width: 100%;
@@ -24,7 +24,7 @@ export const Container = styled.nav`
 `;
 
 export const Tab = styled.div<{ isActive: boolean }>`
-  width: 80px;
+  width: 100px;
   height: ${TAB_BAR_HEIGHT}px;
   padding: 0 10px;
   display: flex;
@@ -33,4 +33,5 @@ export const Tab = styled.div<{ isActive: boolean }>`
 
   cursor: pointer;
   color: ${(props) => (props.isActive ? 'lightcoral' : 'black')};
+  font-weight: ${(props) => (props.isActive ? 700 : 500)}};
 `;

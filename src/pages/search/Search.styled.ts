@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
-import { TAB_BAR_HEIGHT, Z_INDEX } from '../../lib/constants.ts';
+import { Z_INDEX } from '../../lib/constants.ts';
 
 export const Form = styled.form`
   display: flex;
   height: 40px;
+  padding: 18px;
+  background: lightgray;
 
   position: sticky;
   top: 0;
@@ -27,8 +29,7 @@ export const MovieList = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 20px;
   grid-column-gap: 20px;
-  padding: 16px 0;
-  margin-bottom: ${TAB_BAR_HEIGHT}px;
+  padding: 16px 24px;
 `;
 
 export const DialogContent = styled.div`

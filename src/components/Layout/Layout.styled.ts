@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { MAX_PAGE_WIDTH, MIN_PAGE_WIDTH } from '../../lib/constants.ts';
+import {
+  MAX_PAGE_WIDTH,
+  MIN_PAGE_WIDTH,
+  TAB_BAR_HEIGHT,
+} from '../../lib/constants.ts';
 
 export const Container = styled.div`
   position: relative;
@@ -10,6 +14,6 @@ export const Container = styled.div`
   min-height: 100vh;
 
   > main {
-    padding: 18px 24px;
+    margin-bottom: ${TAB_BAR_HEIGHT}px;
   }
 `;
