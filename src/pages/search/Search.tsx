@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { favoritesMoviesState } from '../../state/atom.ts';
 import MovieListItem from '../../components/MovieListItem';
 import useSearchMovie from '../../hooks/queries/useSearchMovie.ts';
+import queryClient from '../../lib/queryClient.ts';
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState<string>('');
@@ -31,6 +32,12 @@ export default function SearchPage() {
       enabled: false,
     },
   );
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries(['search-movie']);
+    };
+  }, []);
 
   useEffect(() => {
     if (data?.Response === 'False') {
