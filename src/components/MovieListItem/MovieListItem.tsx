@@ -1,6 +1,7 @@
 import * as S from './MovieListItem.styled.ts';
 import { Movie } from '../../types/movie.ts';
 import { HTMLAttributes } from 'react';
+import LazyImage from '../LazyImage';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   movie: Movie;
@@ -16,7 +17,7 @@ export default function MovieListItem({
 }: Props) {
   return (
     <S.Container onClick={onClick} {...props}>
-      <img src={movie.Poster} />
+      <LazyImage src={movie.Poster} />
       <S.MovieDescription>
         <div>
           <strong>{movie.Title}</strong>
