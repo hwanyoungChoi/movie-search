@@ -12,7 +12,7 @@ import Dialog from '../../components/Dialog';
 import { useRecoilState } from 'recoil';
 import { favoritesMoviesState } from '../../state/atom.ts';
 import MovieListItem from '../../components/MovieListItem';
-import useSearchMovie from '../../hooks/queries/useSearchMovie.ts';
+import useSearchMovieInfinite from '../../hooks/queries/useSearchMovieInfinite.ts';
 import queryClient from '../../lib/queryClient.ts';
 
 export default function SearchPage() {
@@ -23,26 +23,25 @@ export default function SearchPage() {
   const [favoritesMovies, setFavoritesMovies] =
     useRecoilState(favoritesMoviesState);
 
-  const { data, refetch } = useSearchMovie(
-    {
-      search: keyword.trim(),
-      page: 1,
-    },
+  const { data, refetch, fetchNextPage, hasNextPage } = useSearchMovieInfinite(
+    keyword,
     {
       enabled: false,
     },
   );
+  const [movies, setMovies] = useState<Movie[]>();
 
   useEffect(() => {
-    return () => {
-      queryClient.removeQueries(['search-movie']);
-    };
+    return () => queryClient.removeQueries(['search-movie']);
   }, []);
 
   useEffect(() => {
-    if (data?.Response === 'False') {
-      window.alert(data.Error);
+    if (data?.pages?.[0].Response === 'False') {
+      window.alert(data?.pages[0].Error);
+      return;
     }
+
+    setMovies(data?.pages.flatMap((page) => page.Search).filter(Boolean));
   }, [data]);
 
   const isFavoritesBySelectedMovie = useMemo(() => {
@@ -123,9 +122,9 @@ export default function SearchPage() {
         </button>
       </S.Form>
 
-      {data?.Search?.length ? (
+      {movies?.length ? (
         <S.MovieList>
-          {data.Search.map((movie: Movie) => (
+          {movies.map((movie: Movie) => (
             <MovieListItem
               key={movie.imdbID}
               onClick={() => handleMovieItemClick(movie)}
@@ -139,6 +138,8 @@ export default function SearchPage() {
       ) : (
         <div>검색 결과가 없습니다.</div>
       )}
+
+      {hasNextPage && <button onClick={() => fetchNextPage()}>NextPage</button>}
 
       <Dialog isOpen={isOpenDialog}>
         <S.DialogContent>
