@@ -14,6 +14,8 @@ import { favoritesMoviesState } from '../../state/atom.ts';
 import MovieListItem from '../../components/MovieListItem';
 import useSearchMovieInfinite from '../../hooks/queries/useSearchMovieInfinite.ts';
 import queryClient from '../../lib/queryClient.ts';
+import { useInView } from 'react-intersection-observer';
+import Loader from '../../components/Loader';
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState<string>('');
@@ -23,13 +25,27 @@ export default function SearchPage() {
   const [favoritesMovies, setFavoritesMovies] =
     useRecoilState(favoritesMoviesState);
 
-  const { data, refetch, fetchNextPage, hasNextPage } = useSearchMovieInfinite(
-    keyword,
-    {
-      enabled: false,
-    },
-  );
+  const {
+    data,
+    refetch,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useSearchMovieInfinite(keyword, {
+    enabled: false,
+  });
   const [movies, setMovies] = useState<Movie[]>();
+
+  const { ref: listTailRef } = useInView({
+    threshold: 0,
+    initialInView: false,
+    onChange: (inView) => {
+      if (inView && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+  });
 
   useEffect(() => {
     return () => queryClient.removeQueries(['search-movie']);
@@ -134,12 +150,11 @@ export default function SearchPage() {
               )}
             />
           ))}
+          <div ref={listTailRef} style={{ position: 'absolute', bottom: 0 }} />
         </S.MovieList>
       ) : (
         <div>검색 결과가 없습니다.</div>
       )}
-
-      {hasNextPage && <button onClick={() => fetchNextPage()}>NextPage</button>}
 
       <Dialog isOpen={isOpenDialog}>
         <S.DialogContent>
@@ -154,6 +169,8 @@ export default function SearchPage() {
           </div>
         </S.DialogContent>
       </Dialog>
+
+      {(isFetching || isFetchingNextPage) && <Loader />}
     </>
   );
 }
