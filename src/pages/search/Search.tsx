@@ -38,11 +38,9 @@ export default function SearchPage() {
   const [movies, setMovies] = useState<Movie[]>();
 
   const { ref: listTailRef } = useInView({
-    threshold: 0,
-    initialInView: false,
-    onChange: (inView) => {
+    onChange: async (inView) => {
       if (inView && hasNextPage) {
-        fetchNextPage();
+        await fetchNextPage();
       }
     },
   });
@@ -71,7 +69,7 @@ export default function SearchPage() {
   };
 
   const handleSubmit = useCallback(
-    (e: FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
 
       if (!keyword) {
@@ -79,7 +77,7 @@ export default function SearchPage() {
         return;
       }
 
-      refetch();
+      await refetch();
     },
     [keyword, refetch],
   );
