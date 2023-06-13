@@ -10,7 +10,9 @@ export type SearchMovieResponse = ListResponse<Movie>;
 
 const searchMovie = async (keyword: string, page: number) => {
   const res = await fetch(
-    `http://www.omdbapi.com/?apikey=92e32667&s=${keyword}&page=${page}`,
+    `${
+      import.meta.env.VITE_API_HOST
+    }?apikey=92e32667&s=${keyword}&page=${page}`,
   );
   return await res.json();
 };
