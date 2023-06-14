@@ -1,9 +1,9 @@
 import * as S from './MovieListItem.styled.ts';
 import { Movie } from 'types/movie.ts';
-import { HTMLAttributes } from 'react';
+import { ComponentProps } from 'react';
 import LazyImage from '../LazyImage';
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props extends ComponentProps<'div'> {
   movie: Movie;
   onClick: () => void;
   isFavorites: boolean;

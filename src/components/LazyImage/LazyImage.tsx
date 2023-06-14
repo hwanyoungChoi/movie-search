@@ -1,10 +1,7 @@
 import { useInView } from 'react-intersection-observer';
-import { HTMLProps } from 'react';
+import { ComponentProps } from 'react';
 
-export default function LazyImage({
-  src,
-  ...props
-}: HTMLProps<HTMLImageElement>) {
+export default function LazyImage({ src, ...props }: ComponentProps<'img'>) {
   const { ref, inView } = useInView({
     triggerOnce: true,
   });
