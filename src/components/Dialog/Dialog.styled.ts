@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Z_INDEX } from '../../lib/constants.ts';
+import { Z_INDEX } from 'lib/constants.ts';
 
 export const Container = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? 'block' : 'none')};

@@ -1,5 +1,5 @@
 import * as S from './MovieListItem.styled.ts';
-import { Movie } from '../../types/movie.ts';
+import { Movie } from 'types/movie.ts';
 import { HTMLAttributes } from 'react';
 import LazyImage from '../LazyImage';
 

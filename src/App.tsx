@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import AppRoutes from './AppRoutes.tsx';
 import { RecoilRoot } from 'recoil';
 import { QueryClientProvider } from '@tanstack/react-query';
-import queryClient from './lib/queryClient.ts';
-import Loader from './components/Loader';
+import queryClient from 'lib/queryClient.ts';
+import Loader from 'components/Loader';
 
 function App() {
   return (

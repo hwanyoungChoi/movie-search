@@ -1,5 +1,5 @@
 import { atom, AtomEffect, DefaultValue } from 'recoil';
-import { Movie } from '../types/movie.ts';
+import { Movie } from 'types/movie.ts';
 
 export const localStorageEffect: <T>(key: string) => AtomEffect<T> =
   (key: string) =>

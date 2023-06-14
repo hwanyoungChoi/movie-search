@@ -1,6 +1,6 @@
 import * as S from './TabBar.styled.ts';
 import { Link } from 'react-router-dom';
-import { PATHS } from '../../lib/routes.ts';
+import { PATHS } from 'lib/routes.ts';
 import { useState } from 'react';
 interface TabItem {
   label: string;

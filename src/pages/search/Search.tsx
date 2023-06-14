@@ -7,15 +7,15 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Movie } from '../../types/movie.ts';
-import Dialog from '../../components/Dialog';
+import { Movie } from 'types/movie.ts';
+import Dialog from 'components/Dialog';
 import { useRecoilState } from 'recoil';
-import { favoritesMoviesState } from '../../state/atom.ts';
-import MovieListItem from '../../components/MovieListItem';
-import useSearchMovieInfinite from '../../hooks/queries/useSearchMovieInfinite.ts';
-import queryClient from '../../lib/queryClient.ts';
+import { favoritesMoviesState } from 'state/atom.ts';
+import MovieListItem from 'components/MovieListItem';
+import useSearchMovieInfinite from 'hooks/queries/useSearchMovieInfinite.ts';
+import queryClient from 'lib/queryClient.ts';
 import { useInView } from 'react-intersection-observer';
-import Loader from '../../components/Loader';
+import Loader from 'components/Loader';
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState<string>('');

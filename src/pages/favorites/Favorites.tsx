@@ -1,10 +1,10 @@
 import * as S from './Favorites.styled.ts';
 import { useRecoilState } from 'recoil';
-import { favoritesMoviesState } from '../../state/atom.ts';
-import MovieListItem from '../../components/MovieListItem';
+import { favoritesMoviesState } from 'state/atom.ts';
+import MovieListItem from 'components/MovieListItem';
 import { useCallback, useState } from 'react';
-import { Movie } from '../../types/movie.ts';
-import Dialog from '../../components/Dialog';
+import { Movie } from 'types/movie.ts';
+import Dialog from 'components/Dialog';
 
 export default function FavoritesPage() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);

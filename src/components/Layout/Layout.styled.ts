@@ -3,7 +3,7 @@ import {
   MAX_PAGE_WIDTH,
   MIN_PAGE_WIDTH,
   TAB_BAR_HEIGHT,
-} from '../../lib/constants.ts';
+} from 'lib/constants.ts';
 
 export const Container = styled.div`
   position: relative;

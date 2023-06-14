@@ -3,8 +3,8 @@ import {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
-import { ListResponse } from '../../types/api.ts';
-import { Movie } from '../../types/movie.ts';
+import { ListResponse } from 'types/api.ts';
+import { Movie } from 'types/movie.ts';
 
 export type SearchMovieResponse = ListResponse<Movie>;
 
