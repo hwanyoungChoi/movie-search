@@ -5,16 +5,20 @@ import {
 } from '@tanstack/react-query';
 import { ListResponse } from 'types/api.ts';
 import { Movie } from 'types/movie.ts';
+import axiosInstance from 'lib/axios.ts';
+
+export interface SearchMovieRequestParams {
+  s: string;
+  page: number;
+}
 
 export type SearchMovieResponse = ListResponse<Movie>;
 
-const searchMovie = async (keyword: string, page: number) => {
-  const res = await fetch(
-    `${
-      import.meta.env.VITE_API_HOST
-    }?apikey=92e32667&s=${keyword}&page=${page}`,
-  );
-  return await res.json();
+const searchMovie = async (
+  params: SearchMovieRequestParams,
+): Promise<SearchMovieResponse> => {
+  const res = await axiosInstance('', { params });
+  return res.data;
 };
 
 export default function useSearchMovieInfinite(
@@ -23,7 +27,7 @@ export default function useSearchMovieInfinite(
 ): UseInfiniteQueryResult<SearchMovieResponse> {
   return useInfiniteQuery<SearchMovieResponse>(
     ['search-movie'],
-    ({ pageParam }) => searchMovie(keyword, pageParam ?? 1),
+    ({ pageParam }) => searchMovie({ s: keyword, page: pageParam ?? 1 }),
     {
       ...options,
       getNextPageParam: (lastPage, allPages) => {
