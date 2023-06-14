@@ -43,3 +43,8 @@ export const DialogContent = styled.div`
     }
   }
 `;
+
+export const Target = styled.div`
+  position: absolute;
+  bottom: 0;
+`;

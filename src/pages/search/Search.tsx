@@ -148,7 +148,7 @@ export default function SearchPage() {
               )}
             />
           ))}
-          <div ref={listTailRef} style={{ position: 'absolute', bottom: 0 }} />
+          <S.Target ref={listTailRef} />
         </S.MovieList>
       ) : (
         <div>검색 결과가 없습니다.</div>
