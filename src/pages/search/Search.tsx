@@ -52,6 +52,7 @@ export default function SearchPage() {
   useEffect(() => {
     if (data?.pages?.[0].Response === 'False') {
       window.alert(data?.pages[0].Error);
+      setMovies([]);
       return;
     }
 
