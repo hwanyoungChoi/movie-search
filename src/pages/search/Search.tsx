@@ -163,7 +163,7 @@ export default function SearchPage() {
               {isFavoritesBySelectedMovie ? '즐겨찾기 제거' : '즐겨찾기 추가'}
             </button>
             <button type="button" onClick={() => setIsOpenDialog(false)}>
-              취소
+              취소1
             </button>
           </div>
         </S.DialogContent>
