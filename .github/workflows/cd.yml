@@ -39,7 +39,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}:test
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/movie-search:test
 
       - name: Docker pull and restart container
         uses: appleboy/ssh-action@master
@@ -49,6 +49,6 @@ jobs:
           username: ${{ secrets.USER }}
           port: ${{ secrets.PORT }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}:test
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/movie-search:test
             sudo docker stop test
-            sudo docker run -d --rm --name test -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}:test
+            sudo docker run -d -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/movie-search:test
