@@ -1,0 +1,54 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/Hydrogen
+
+      - uses: actions/cache@v3.3.2
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install and build
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn && yarn build
+
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Docker build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}:test
+
+      - name: Docker pull and restart container
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}:test
+            sudo docker stop test
+            sudo docker run -d --rm --name test -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}:test
